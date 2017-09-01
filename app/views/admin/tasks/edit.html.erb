@@ -1,0 +1,32 @@
+<h1>Edit User Task - <%=@task.name%> </h1>
+<%= form_for @task, url: admin_task_path(@task) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% @task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :status %>
+    <%= f.select(:status, options_for_select(@all_status, @task.status),{},:style => "width:250px") %>
+  </div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.select(:user_id, options_for_select(User.all.collect{|u| [u.email,u.id]}, current_user.email),{disabled:current_user.email},{ :disabled=> !current_user.admin?})  %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

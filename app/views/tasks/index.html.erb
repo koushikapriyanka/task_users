@@ -1,0 +1,31 @@
+
+<p id="notice"><%= notice %></p>
+
+<h1>Tasks</h1>
+
+<table border=1>
+  <thead>
+    <tr>
+      
+      <th>Name</th>
+      <th>Status</th>
+      <th colspan="2">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        
+        <td><%= task.name %></td>
+        <td><%= task.status_name%></td>
+        <td><%= link_to 'Show', task %></td>
+        <td><%= link_to_if (task.status.to_i < 5), 'Edit', edit_task_path(task) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task', new_task_path %>

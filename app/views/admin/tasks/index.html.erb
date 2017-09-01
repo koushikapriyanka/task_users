@@ -1,0 +1,85 @@
+<%= high_chart_globals(chart_globals) %>
+<%= high_chart("task_chart", initialize_charts(@tasks)) %>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Tasks</h1>
+<% if @create_assign_user %>
+  <hr>
+  Assign Task To User 
+  <%= form_for :task, url: "/admin/tasks/assign_users", html: { class: " control-label"},:method => "put" do |f| %>
+   <div class="field">
+      <%= f.label :user_id  %>
+      <%= f.select(:user_id, options_for_select(User.all.map{|x| [x.email, x.id]}),{},:style => "width:250px") %>
+      <%= f.hidden_field :task_id %>  <br><br>
+      <%= f.submit 'Assign Task' %>
+    </div>
+  <% end %>
+  <br>
+  <%= link_to 'Create Users', new_user_registration_path, target: :_blank %></td>
+  <hr>
+<%end%>
+
+<table border=1>
+  <thead>
+    <tr>
+    <% if @create_assign_user %>
+      <th>Sr. No.</th>
+    <%end%>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Assigned To</th>
+      <th colspan="3">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+      <% if @create_assign_user %>
+      <td><input type="checkbox" class="product_checkbox" id=<%=task.id%>></td>
+      <%end%>
+        <td><%= task.name %></td>
+        <td><%= task.status_name%></td>
+        <td><%= task.user.try(:email)%></td>
+        <td><%= link_to 'Show', task %></td>
+        <td><%= link_to 'Edit', edit_admin_task_path(task)%></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task', new_task_path %>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script type="text/javascript">
+$(document).on("ready", function(){
+  $.cookie("product_ids",'')
+  var getPreviousIds = function() {
+        prev_ids_csv = $.cookie("product_ids")
+        if (prev_ids_csv != undefined && prev_ids_csv.length > 0) {
+          return prev_ids_csv.split(",");
+        } else {
+          return [];
+        }
+      }
+  var removeElement = function(item, list) {
+      while( list.indexOf(item) >= 0) {
+        list.splice(list.indexOf(item), 1)
+      }
+      return list;
+    };
+  $(".product_checkbox").on("click", function() {
+        prev_ids = getPreviousIds();
+        if(this.checked) {
+          prev_ids.push(this.id);
+        } else {
+          prev_ids = removeElement(this.id, prev_ids);
+        }
+        $('#task_task_id')[0].value = prev_ids
+        $.cookie("product_ids", prev_ids);
+      })
+  })
+</script>
