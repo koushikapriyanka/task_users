@@ -2,7 +2,12 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Tasks</h1>
-
+   <%= form_tag tasks_path, method: :get do%>
+     <%= label_tag :name%>
+     <%= text_field_tag "name", params[:name]%>
+     <%= submit_tag "Search"%>
+    <%end%>
+    <br>
 <table border=1>
   <thead>
     <tr>
@@ -16,7 +21,6 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        
         <td><%= task.name %></td>
         <td><%= task.status_name%></td>
         <td><%= link_to 'Show', task %></td>
