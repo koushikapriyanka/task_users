@@ -106,11 +106,11 @@ GEM
     minitest (5.10.3)
     multi_json (1.12.1)
     multipart-post (2.0.0)
-    mysql2 (0.4.9)
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
     orm_adapter (0.5.0)
+    pg (0.21.0)
     puma (3.10.0)
     rack (2.0.3)
     rack-test (0.6.3)
@@ -203,7 +203,7 @@ DEPENDENCIES
   jquery-rails
   lazy_high_charts
   listen (~> 3.0.5)
-  mysql2
+  pg
   puma (~> 3.0)
   rails (~> 5.0.5)
   sass-rails (~> 5.0)
@@ -215,4 +215,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.13.6
+   1.15.3
