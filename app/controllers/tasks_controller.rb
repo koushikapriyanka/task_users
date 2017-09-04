@@ -6,14 +6,12 @@ class TasksController < ApplicationController
   def index
     @tasks = (current_user.admin? ? Task.all : current_user.tasks)
     if params[:name].present?
-      resp = Task.search(params[:name])
+      resp = Task.where("name like '%#{params[:name]}%'")
       if resp.present? 
         if !current_user.admin?
-          resp = resp.map{|task| task['_source']}.map{|task| task['id'] if (task["user_id"] == current_user.id)}.compact
-        else
-          resp = resp.map{|task| task['_source']}.map{|task| task['id']}.compact
+          resp = resp.where(:user_id => current_user.id)
         end
-        @tasks = @tasks.where(:id=> resp) if resp.present?
+        @tasks = resp 
       end
     end  
   end
