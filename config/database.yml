@@ -8,10 +8,11 @@ default: &default
   pool: 5
   timeout: 5000
   database: user_registration
-  adapter: mysql2 
+  adapter: postgresql
+  host: localhost
+  port: 5432
   username: "root"
   password: ""
-  port: 3306
 
 development:
   <<: *default
