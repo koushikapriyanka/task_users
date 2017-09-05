@@ -8,6 +8,9 @@
      <%= submit_tag "Search"%>
     <%end%>
     <br>
+    <% if @error.present? %>
+      <p><%=@error%></p>
+    <% end %>
 <table border=1>
   <thead>
     <tr>
