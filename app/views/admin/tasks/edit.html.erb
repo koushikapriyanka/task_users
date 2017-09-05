@@ -23,7 +23,7 @@
   </div>
   <div class="field">
     <%= f.label :email %>
-    <%= f.select(:user_id, options_for_select(User.all.collect{|u| [u.email,u.id]}, current_user.email),{disabled:current_user.email},{ :disabled=> !current_user.admin?})  %>
+    <%= f.select(:user_id, options_for_select(User.all.collect{|u| [u.email,u.id]}, @task.user.id),{disabled:current_user.email},{ :disabled=> !current_user.admin?})  %>
   </div>
 
   <div class="actions">
