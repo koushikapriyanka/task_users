@@ -8,7 +8,6 @@ class Admin::TasksController < Admin::BaseController
 	end
 
 	def edit
-		@task = Task.first
 		@all_status =  {1 => "New", 2 => "In Progress", 3 => "Completed", 4 => "Expired", 5 => "Pending Approved", 6 => "Completed and Approved "}.map{|k,v| [v,k] }
 	end
 
