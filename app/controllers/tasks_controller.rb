@@ -5,13 +5,17 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @tasks = (current_user.admin? ? Task.all : current_user.tasks)
+    @error = nil
     if params[:name].present?
-      resp = Task.where("name like '%#{params[:name]}%'")
+      resp = Task.where("name ilike '%#{params[:name]}%'")
       if resp.present? 
         if !current_user.admin?
           resp = resp.where(:user_id => current_user.id)
         end
-        @tasks = resp 
+          @tasks = resp 
+      end
+      if resp.blank?
+        @error = "No Task Present with \'#{params[:name]}\' name"
       end
     end  
   end
