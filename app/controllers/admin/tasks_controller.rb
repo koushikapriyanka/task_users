@@ -1,4 +1,4 @@
-class Admin::TasksController < ApplicationController
+class Admin::TasksController < Admin::BaseController
 	include Admin::TaskHelper
 	  before_action :find_task, only: [:edit, :update]
 
